@@ -62,6 +62,10 @@ Download the .whl file for your platform and Python version.
 Once downloaded, install it locally using:
 pip install path/to/package.whl
 
+                **4.ValueError: Expected where to have exactly one operator, got {'policy_type': 'Home Guard', 'country': 'Hong Kong'} python-BaseException**
+
+                This error occurs because ChromaDB's where clause expects only a single condition with an operator (like $eq, $ne, $in, etc.) rather than multiple field-value pairs directly in the dictionary. To combine conditions like "policy_type": "Home Guard" and "country": "Hong Kong", you need to use the $and operator.
+
 
 
 
