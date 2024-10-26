@@ -28,20 +28,22 @@ You may also consider additional workloads based on your needs (like Game Develo
 
 **                                          **2. Error:** cl not executable**
 **                                          
-**2. Solution** Add environment variables C:\Program Files\Microsoft Visual Studio\2022\<Edition>\VC\Tools\MSVC\<version>\bin\Hostx64\x64
+2. Solution: Add environment variables C:\Program Files\Microsoft Visual Studio\2022\<Edition>\VC\Tools\MSVC\<version>\bin\Hostx64\x64
 
                             
-                                 **3. Error**: HTTPSConnectionPool(host='files.pythonhosted.org', port=443): Read timed out.
-**3. Solution**: 
-1. Increase the pip Timeout (pip install <package-name> --timeout=100)
+**3. Error**: HTTPSConnectionPool(host='files.pythonhosted.org', port=443): Read timed out.
 
-**2. Use a Different Package Mirror (Like PyPI Mirror)**
+3. Solution:
+   
+//1. Increase the pip Timeout (pip install <package-name> --timeout=100)//
+
+//2. Use a Different Package Mirror (Like PyPI Mirror)//
 Sometimes, network issues with the default Python Package Index (PyPI) can cause this timeout. You can specify an alternate PyPI mirror like this:
 pip install <package-name> --index-url=https://pypi.org/simple --timeout=100
 Alternatively, you can try installing from a different country’s mirror (such as a regional mirror for faster speeds in your area). For example:
 pip install <package-name> --index-url=https://pypi.tuna.tsinghua.edu.cn/simple
 
-**3. Check Your Internet Connection**
+//3. Check Your Internet Connection//
 
 Ensure you have a stable internet connection as intermittent connectivity can lead to timeouts.
 
@@ -49,10 +51,10 @@ If you’re behind a firewall or proxy, ensure that pip has the necessary permis
 
 pip install <package-name> --proxy="http://proxy.server:port"
 
-**4. Update pip**
+//4. Update pip//
 python -m pip install --upgrade pip
 
-**5. Download the Package Manually**
+//5. Download the Package Manually//
 If the above steps don’t work, you can download the package manually from PyPI. Here’s how:
 
 Go to https://pypi.org/ and search for the package you need.
@@ -62,9 +64,30 @@ Download the .whl file for your platform and Python version.
 Once downloaded, install it locally using:
 pip install path/to/package.whl
 
-                **4.ValueError: Expected where to have exactly one operator, got {'policy_type': 'Home Guard', 'country': 'Hong Kong'} python-BaseException**
+**4.ValueError: Expected where to have exactly one operator, got {'policy_type': 'Home Guard', 'country': 'Hong Kong'} python-BaseException**
 
                 This error occurs because ChromaDB's where clause expects only a single condition with an operator (like $eq, $ne, $in, etc.) rather than multiple field-value pairs directly in the dictionary. To combine conditions like "policy_type": "Home Guard" and "country": "Hong Kong", you need to use the $and operator.
+
+
+
+**5.CHORMA DB Creation**
+
+To persist data in ChromaDB across sessions, you can configure the Chroma client to use a persistent storage. By default, Chroma operates in an in-memory mode (data is not saved after the program ends). Configuring Chroma to save collections to disk requires setting the Settings parameter to specify the storage location.
+
+Here’s how to modify your code to enable ChromaDB to save the collection to a local database file:
+
+Specify Persistent Storage in Settings:
+
+Use the Settings parameter to set a persist_directory.
+This directory will act as the storage location for ChromaDB.
+Adjust the Code for Persistence:
+
+Ensure the persist_directory path is specified in Settings.
+Load or create the collection each time the program runs to work with the saved data.
+
+//Notes://
+
+If you want to delete the collection, you can use client.delete_collection("insurance_policies"). This removes the collection from both memory and disk storage.
 
 
 
